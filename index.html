@@ -31,671 +31,933 @@
     #topbar {
       display:flex;align-items:center;justify-content:space-between;
       height:62px; background: var(--gradient); color: #fff; font-weight:700;
-      border-radius:0 0 32px 32px;font-size:1.17em; padding:0 18px; box-shadow:0 4px 27px #089bae1a;
+      padding:0 20px; position:sticky; top:0; z-index:100;
     }
-    #profileBtn {
-      background: rgba(255,255,255,0.2);
-      color: #fff;border-radius: 17px;border: none;
-      font-weight: 600;font-size: 1.06em;cursor: pointer;
-      padding: 7px 25px; box-shadow:0 2px 7px #1fc3e822;
-      margin-left:8px;outline:none;display: inline-block;
+    #logo { font-size:1.1em; }
+    #topbar .right { display:flex; gap:10px; }
+    #profileBtn, #signOutBtn {
+      background:rgba(255,255,255,0.25); border:none; color:#fff;
+      padding:6px 12px; border-radius:20px; cursor:pointer; font-size:0.85em;
+      transition:all 0.2s; font-weight:600;
     }
-    #signOutBtn {
-      background: rgba(255,255,255,0.2);
-      color: #fff;border-radius: 17px;border: none;
-      font-weight: 600;font-size: 1.06em;cursor: pointer;
-      padding: 7px 18px; margin-left:8px;outline:none;
+    #profileBtn:hover, #signOutBtn:hover {
+      background:rgba(255,255,255,0.4); transform:scale(1.05);
     }
-    .tab-wrap {display:flex;gap:11px;margin:15px 0 9px 12px;flex-wrap:wrap;}
-    .tab {background:#e3f7fa; color:#2690e4;border:none; padding:7px 22px;border-radius:12px;font-weight:600;cursor:pointer; font-size:1.09em;transition:.13s;}
-    .tab.active {background: var(--primary);color: #fff;}
-    .match-live-box {background: #eafafc;border-left:6px solid var(--primary);border-radius:15px;margin:21px 0 17px 0;box-shadow:0 2px 12px #5edcff1a;padding:14px 22px;font-size:1.08em;display:flex;flex-direction:column;gap:3px;}
-    .live-status-chip {background:#ed2d2d; color:#fff; font-weight:700; padding:3px 10px; border-radius:13px; font-size:.93em; margin-left:7px;display:inline-block;animation:blinker 1.02s linear infinite;}
-    @keyframes blinker {50%{opacity:.65;}100%{opacity:1;}}
-    .quiz-card {background: #fff; border-radius: var(--card-radius);margin:19px 12px; box-shadow: 0 3px 17px #199fd711;padding:20px 16px; position:relative;border: 2px solid #caeffc;}
-    .quiz-meta {display: flex; align-items:center; gap:13px; margin-bottom:12px;}
-    .cat-chip {background:#e0f5e7;color:#05b880;border-radius:10px;font-weight:600;padding:3px 13px;margin-right:10px;display:inline-block;}
-    .quiz-question{font-size:1.15em;font-weight:700;word-break:break-word;margin-bottom:15px;color:#1a2234;}
-    .bet-opts { display: flex; gap:20px; align-items: center; margin-bottom:12px;}
-    .bet-opts label{font-size:1.05em;font-weight:600;cursor:pointer;}
-    .bet-form select,.bet-form button{margin-top:8px;height:40px;}
-    .bet-form select {border-radius: 17px; padding:4px 14px; border:1px solid #c1e4fa;min-width:120px; font-size:1em; background:#f7fcfe;color:#1976b8;font-weight:700;margin-left:13px;}
-    .bet-form button {padding:9px 21px;background: var(--primary);color: #fff;border:none;border-radius:14px;font-size:1em;font-weight:700;cursor:pointer;transition:.1s;margin-left:14px;}
-    .bet-form button:disabled {background:#a8c7fd;}
-    .quiz-card.locked {opacity:.75;}
-    .bet-info {font-size:1.02em;margin:10px 0 8px 0;font-weight:500;color:var(--primary-dark);}
-    .res-chip {padding:6px 20px; border-radius:20px; font-size:1.05em;font-weight:700; display:inline-block;margin-top:6px;}
-    .win-bg {background:#aaf6d2;color:#178b41;}
-    .lose-bg {background:#fdeaea;color:#e44120;}
-    .wait-bg {background:#fffacc;color:#b28c19;}
-    .no-quiz {padding:40px 20px;text-align:center;color:#8da2b5;font-size:1.1em;}
-    .modal-bg {position:fixed;top:0;left:0;right:0;bottom:0;z-index:30;background:rgba(57,77,125,.13);}
-    .modal {position:fixed;top:58px;left:50%;transform:translateX(-50%);max-width:370px;width:95%;z-index:31;background:#fff;border-radius:20px;box-shadow:0 10px 40px #2c589a2a;padding:22px 19px 20px 19px;}
-    .close-btn{position:absolute;right:13px;top:7px;background:transparent;border:none;color:#798;font-size:28px;cursor:pointer;}
-    .profile-label{font-size:1.01em;color:#278bc2;}
-    .profile-val{font-weight:600;font-size:1.10em;color:#1a3950;}
-    .action-btn{padding:10px 20px;background:var(--primary);color:#fff;border-radius:11px;border:none; cursor:pointer; font-size:1.01em;font-weight:700;margin:9px 11px 0 0;}
-    .action-btn.wdr{background:#11a85b;}
-    .input-x{width:92%;padding:8px 12px;font-size:1.04em;border-radius:11px; border: 1.2px solid #d9ebfa; background:#f3fbfd; margin:8px 0; transition:.15s;outline:none;}
-    .input-x:focus{border:1.3px solid var(--primary);}
-    .captcha-box{display:flex;align-items:center;gap:12px;margin:6px 0;}
-    .captcha-img{font-family: monospace; font-size:1.07em; background: linear-gradient(92deg,#bdefff,#fff); color:#265ea1; border-radius:8px;padding:5px 17px 5px 17px;font-weight:700;letter-spacing:2px; border:1.8px solid #75dcfd;box-shadow:0 2px 9px #2bb5fd17;user-select:none;width:80px;text-align:center;}
-    .refresh-captcha{background:transparent;border:none;color:#1c87c9;font-weight:700;font-size:1.05em;cursor:pointer;}
-    .captcha-error{color:#cf292b;font-size:.95em;}
-    #authContainer {padding:2rem 1.5rem;max-width:380px;margin:4rem auto;}
-    .auth-card {background:#fff;padding:2rem;border-radius:var(--card-radius);box-shadow:0 8px 32px #1c94d21f;}
-    .auth-title {text-align:center;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;color:var(--primary-dark);}
-    .auth-card input {width:100%;box-sizing:border-box;margin-bottom:1rem;}
-    .auth-card button {width:100%;padding:0.7rem;font-size:1.1rem;}
-    .auth-link {text-align:center;margin-top:1rem;font-size:0.95rem;}
-    .auth-link a {color:var(--primary-dark);text-decoration:none;font-weight:600;}
-    .error-msg {color:#d92f2f;text-align:center;min-height:1.2rem;font-weight:600;margin-top:0.5rem;}
-    @media(max-width:600px){#app-container{border-radius:0;}}
+    
+    .modal {
+      position:fixed; top:0; left:0; width:100vw; height:100vh;
+      background:rgba(0,0,0,0.6); display:none; align-items:center;
+      justify-content:center; z-index:1000; backdrop-filter:blur(5px);
+    }
+    .modal-content {
+      background:#fff; width:90%; max-width:400px; border-radius:var(--card-radius);
+      padding:24px; position:relative; max-height:85vh; overflow-y:auto;
+      box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    }
+    .close-btn {
+      position:absolute; top:15px; right:15px; background:none;
+      border:none; font-size:24px; cursor:pointer; color:#999;
+      transition:color 0.2s;
+    }
+    .close-btn:hover { color:#000; }
+    
+    .stats-grid {
+      display:flex; justify-content:space-between; padding:20px;
+      background:rgba(255,255,255,0.9); margin:10px; border-radius:15px;
+    }
+    .stat-item { text-align:center; }
+    .stat-value { font-size:1.4em; font-weight:700; color:var(--primary); }
+    .stat-label { font-size:0.85em; color:#666; margin-top:2px; }
+    
+    .action-buttons {
+      display:flex; gap:10px; padding:0 20px 20px; justify-content:center;
+    }
+    .action-btn {
+      background:var(--primary); color:#fff; border:none; padding:10px 20px;
+      border-radius:25px; cursor:pointer; font-weight:600; font-size:0.9em;
+      transition:all 0.2s; flex:1; max-width:120px;
+    }
+    .action-btn:hover { background:var(--primary-dark); transform:translateY(-1px); }
+    .action-btn.wdr { background:var(--accent); }
+    .action-btn.wdr:hover { background:#00a891; }
+    
+    .input-field {
+      width:100%; padding:12px; border:2px solid #e5e5e5; border-radius:8px;
+      font-size:1em; margin-bottom:15px; transition:border-color 0.2s;
+    }
+    .input-field:focus { outline:none; border-color:var(--primary); }
+    
+    .captcha-row {
+      display:flex; align-items:center; gap:10px; margin-bottom:15px;
+    }
+    .captcha-display {
+      background:linear-gradient(135deg,#e3f2fd,#bbdefb); color:var(--primary-dark);
+      padding:8px 16px; border-radius:8px; font-family:monospace; font-weight:700;
+      font-size:1.1em; letter-spacing:2px; user-select:none; border:2px solid var(--primary);
+    }
+    .refresh-captcha {
+      background:var(--accent); color:#fff; border:none; padding:8px 12px;
+      border-radius:6px; cursor:pointer; font-weight:700;
+    }
+    
+    #mainContent { padding:10px; }
+    .category-tabs {
+      display:flex; overflow-x:auto; gap:8px; padding:10px 0;
+      scrollbar-width:none; -ms-overflow-style:none;
+    }
+    .category-tabs::-webkit-scrollbar { display:none; }
+    .category-tab {
+      background:rgba(39,176,247,0.1); color:var(--primary); border:2px solid var(--primary);
+      padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:600;
+      white-space:nowrap; transition:all 0.2s; font-size:0.85em;
+    }
+    .category-tab.active, .category-tab:hover {
+      background:var(--primary); color:#fff;
+    }
+    
+    .question-card {
+      background:#fff; border-radius:var(--card-radius); padding:20px;
+      margin:15px 0; box-shadow:var(--shadow); border-left:4px solid var(--primary);
+    }
+    .question-title { font-size:1.1em; font-weight:700; color:var(--primary-dark); margin-bottom:8px; }
+    .question-category {
+      background:var(--primary); color:#fff; padding:4px 12px;
+      border-radius:15px; font-size:0.8em; display:inline-block; margin-bottom:10px;
+    }
+    .question-text { color:#555; line-height:1.5; margin-bottom:15px; }
+    .question-timer {
+      color:#ff6b35; font-weight:600; font-size:0.9em; margin-bottom:15px;
+    }
+    
+    .bet-section {
+      background:rgba(39,176,247,0.05); padding:20px; border-radius:15px;
+      border:2px solid rgba(39,176,247,0.2); margin-top:15px;
+    }
+    
+    .bet-choice-section {
+      margin-bottom:20px;
+    }
+    
+    .bet-choice-title {
+      font-size:1em; font-weight:700; color:var(--primary-dark);
+      margin-bottom:12px; text-align:center;
+    }
+    
+    .bet-choices {
+      display:flex; gap:10px; justify-content:center; margin-bottom:20px;
+    }
+    
+    .bet-choice {
+      flex:1; max-width:120px; padding:12px 16px; border:2px solid #e5e5e5;
+      border-radius:12px; background:#fff; cursor:pointer; text-align:center;
+      font-weight:600; transition:all 0.3s ease; position:relative;
+    }
+    
+    .bet-choice:hover {
+      border-color:var(--primary); transform:translateY(-2px);
+      box-shadow:0 4px 15px rgba(39,176,247,0.2);
+    }
+    
+    .bet-choice.selected {
+      border-color:var(--primary); background:var(--primary); color:#fff;
+      transform:translateY(-2px); box-shadow:0 4px 15px rgba(39,176,247,0.3);
+    }
+    
+    .bet-choice.yes { border-color:#4caf50; }
+    .bet-choice.yes:hover, .bet-choice.yes.selected { 
+      border-color:#4caf50; background:#4caf50; 
+    }
+    
+    .bet-choice.no { border-color:#f44336; }
+    .bet-choice.no:hover, .bet-choice.no.selected { 
+      border-color:#f44336; background:#f44336; 
+    }
+    
+    .bet-amount-section {
+      margin-top:15px;
+    }
+    
+    .bet-amount-title {
+      font-size:0.95em; font-weight:600; color:var(--primary-dark);
+      margin-bottom:10px; text-align:center;
+    }
+    
+    .bet-amounts {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+      gap:8px; margin-bottom:15px;
+    }
+    
+    .bet-amount {
+      padding:10px 12px; border:2px solid #e5e5e5; border-radius:10px;
+      background:#fff; cursor:pointer; text-align:center; font-weight:600;
+      font-size:0.85em; transition:all 0.3s ease; position:relative;
+    }
+    
+    .bet-amount:hover {
+      border-color:var(--primary); transform:translateY(-1px);
+      box-shadow:0 2px 8px rgba(39,176,247,0.2);
+    }
+    
+    .bet-amount.selected {
+      border-color:var(--primary); background:var(--primary); color:#fff;
+      transform:translateY(-1px); box-shadow:0 2px 8px rgba(39,176,247,0.3);
+    }
+    
+    .bet-amount .amount { font-size:0.9em; font-weight:700; }
+    .bet-amount .win { font-size:0.75em; color:#4caf50; margin-top:2px; }
+    .bet-amount.selected .win { color:#90EE90; }
+    
+    .place-bet-btn {
+      width:100%; background:var(--primary); color:#fff; border:none;
+      padding:15px; border-radius:12px; font-size:1em; font-weight:700;
+      cursor:pointer; transition:all 0.3s ease; margin-top:15px;
+    }
+    
+    .place-bet-btn:hover {
+      background:var(--primary-dark); transform:translateY(-2px);
+      box-shadow:0 4px 15px rgba(39,176,247,0.3);
+    }
+    
+    .place-bet-btn:disabled {
+      background:#ccc; cursor:not-allowed; transform:none;
+      box-shadow:none;
+    }
+    
+    .bet-info {
+      background:#e8f5e8; color:#2e7d32; padding:15px; border-radius:12px;
+      font-weight:600; border-left:4px solid #4caf50; text-align:center;
+    }
+    
+    .result-chip {
+      padding:8px 16px; border-radius:25px; font-weight:700; font-size:0.9em;
+      display:inline-block; margin-top:10px;
+    }
+    .win-bg { background:#d4edda; color:#155724; }
+    .lose-bg { background:#f8d7da; color:#721c24; }
+    .pending-bg { background:#fff3cd; color:#856404; }
+    
+    .history-section { margin-top:20px; }
+    .history-item {
+      background:#fff; padding:15px; margin:10px 0; border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08); border-left:4px solid var(--accent);
+    }
+    .history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .history-question { font-weight:600; color:var(--primary-dark); }
+    .history-amount { font-weight:700; }
+    .history-details { font-size:0.9em; color:#666; }
+    
+    .auth-container {
+      max-width:380px; margin:60px auto; padding:20px;
+    }
+    .auth-card {
+      background:#fff; padding:30px; border-radius:var(--card-radius);
+      box-shadow:var(--shadow); text-align:center;
+    }
+    .auth-title {
+      font-size:1.5em; font-weight:700; color:var(--primary-dark);
+      margin-bottom:25px;
+    }
+    .auth-input {
+      width:100%; padding:12px; border:2px solid #e5e5e5; border-radius:8px;
+      font-size:1em; margin-bottom:15px; box-sizing:border-box;
+    }
+    .auth-input:focus { outline:none; border-color:var(--primary); }
+    .auth-btn {
+      width:100%; background:var(--primary); color:#fff; border:none;
+      padding:12px; border-radius:8px; font-size:1em; font-weight:700;
+      cursor:pointer; margin-bottom:10px; transition:background 0.2s;
+    }
+    .auth-btn:hover { background:var(--primary-dark); }
+    .auth-link { margin-top:15px; font-size:0.9em; }
+    .auth-link a { color:var(--primary); text-decoration:none; font-weight:600; }
+    
+    .empty-state {
+      text-align:center; padding:40px 20px; color:#666;
+    }
+    .empty-icon { font-size:3em; margin-bottom:15px; opacity:0.5; }
+    
+    @media (max-width: 500px) {
+      #app-container { max-width:100%; border-radius:0; }
+      .stats-grid { margin:5px; padding:15px; }
+      .action-buttons { padding:0 15px 15px; }
+      .question-card { margin:10px 5px; padding:15px; }
+      .bet-choices { flex-direction:column; align-items:center; }
+      .bet-choice { max-width:200px; }
+      .bet-amounts { grid-template-columns:repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
+  <div id="newsBar">
+    <marquee id="newsText">Welcome to Cricket Quiz Bet! Place your bets and win big!</marquee>
+  </div>
 
-<!-- NEWS MARQUEE -->
-<div id="newsBar" style="display:none;"><marquee id="newsMarquee" scrollamount="4">&nbsp;</marquee></div>
+  <div id="authContainer" class="auth-container" style="display:none;"></div>
 
-<!-- AUTHENTICATION CONTAINER -->
-<div id="authContainer" style="display:none;"></div>
-
-<!-- MAIN APP CONTAINER -->
-<div id="app-container" style="display:none;">
-  <div id="topbar">
-    <span>🏏 Cricket Quiz Bet</span>
-    <div>
+  <div id="app-container" style="display:none;">
+    <div id="topbar">
+      <div id="logo">🏏 Cricket Quiz Bet</div>
+      <div class="right">
         <button id="profileBtn" onclick="openProfile()">Profile</button>
         <button id="signOutBtn" onclick="signOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value" id="walletAmount">₹0</div>
+        <div class="stat-label">Wallet</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalBets">0</div>
+        <div class="stat-label">Total Bets</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalWins">0</div>
+        <div class="stat-label">Wins</div>
+      </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeProfile()">×</button>
+        <h3>👤 Profile</h3>
+        <div id="profileContent">Loading...</div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn" onclick="openDeposit()">Deposit</button>
+      <button class="action-btn wdr" onclick="openWithdraw()">Withdraw</button>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="depositModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeDeposit()">×</button>
+        <h3>💰 Deposit Money</h3>
+        <p style="color:#666;font-size:0.9em;margin-bottom:15px;">
+          Send money to UPI: <strong>your-upi@paytm</strong><br>
+          Then fill this form with transaction details
+        </p>
+        <input type="number" id="depositAmount" class="input-field" placeholder="Amount (min ₹100)" min="100">
+        <input type="text" id="depositName" class="input-field" placeholder="Your Full Name" required>
+        <input type="tel" id="depositPhone" class="input-field" placeholder="Phone Number" maxlength="10">
+        <input type="text" id="depositTxnId" class="input-field" placeholder="UPI Transaction ID">
+        <div class="captcha-row">
+          <div class="captcha-display" id="depositCaptcha">LOADING</div>
+          <button class="refresh-captcha" onclick="refreshDepositCaptcha()" type="button">↻</button>
+          <input type="text" id="depositCaptchaInput" class="input-field" placeholder="Enter Captcha" style="margin-bottom:0;flex:1;">
+        </div>
+        <button class="action-btn" style="width:98%;margin-top:10px;" onclick="submitDeposit()">Submit</button>
+      </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeWithdraw()">×</button>
+        <h3>💸 Withdraw Money</h3>
+        <input type="number" id="withdrawAmount" class="input-field" placeholder="Amount (min ₹100)" min="100">
+        <input type="text" id="withdrawAccount" class="input-field" placeholder="Bank Account Number" required>
+        <input type="text" id="withdrawIFSC" class="input-field" placeholder="IFSC Code" required>
+        <div class="captcha-row">
+          <div class="captcha-display" id="withdrawCaptcha">LOADING</div>
+          <button class="refresh-captcha" onclick="refreshWithdrawCaptcha()" type="button">↻</button>
+          <input type="text" id="withdrawCaptchaInput" class="input-field" placeholder="Enter Captcha" style="margin-bottom:0;flex:1;">
+        </div>
+        <button class="action-btn wdr" style="width:98%;margin-top:10px;" onclick="submitWithdraw()">Request Withdraw</button>
+      </div>
+    </div>
+
+    <div id="mainContent">
+      <div class="category-tabs" id="categoryTabs">
+        <div class="category-tab active" onclick="filterByCategory('All')">All</div>
+        <div class="category-tab" onclick="filterByCategory('IPL')">IPL</div>
+        <div class="category-tab" onclick="filterByCategory('ODI')">ODI</div>
+        <div class="category-tab" onclick="filterByCategory('T20')">T20</div>
+        <div class="category-tab" onclick="filterByCategory('Test')">Test</div>
+      </div>
+      
+      <div id="questionsContainer">
+        <div class="empty-state">
+          <div class="empty-icon">🔄</div>
+          <div>Loading cricket betting opportunities...</div>
+        </div>
+      </div>
+      
+      <div class="history-section">
+        <h3 style="padding:0 10px;color:var(--primary-dark);">📊 Recent Bets</h3>
+        <div id="historyContainer">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <div>No betting history yet</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div id="categoryTabs" class="tab-wrap"></div>
-  <div id="matchLiveArea"></div>
-  <div id="quizQuestions"></div>
-</div>
 
-<!-- MODALS -->
-<div class="modal-bg" id="modalBg" style="display:none;"></div>
-<div id="profileModal" class="modal" style="display:none;">
-  <button class="close-btn" onclick="closeProfile()">×</button>
-  <h3 style="margin-bottom:11px;">My Profile</h3>
-  <div style="margin-bottom:10px;">
-    <span class="profile-label">Full Name:</span> <span class="profile-val" id="profName"></span><br>
-    <span class="profile-label">Phone:</span> <span class="profile-val" id="profPhone"></span><br>
-    <span class="profile-label">Email:</span> <span class="profile-val" id="profEmail"></span><br>
-    <span class="profile-label">Balance:</span> <span class="profile-val" id="profBalance"></span><br>
-    <span class="profile-label">Wins:</span> <span class="profile-val" id="profWins"></span>
-    <span style="margin-left:12px;" class="profile-label">Losses:</span> <span class="profile-val" id="profLosses"></span>
-  </div>
-  <button class="action-btn" onclick="openDeposit()">Deposit</button>
-  <button class="action-btn wdr" onclick="openWithdraw()">Withdraw</button>
-  <div style="font-weight:600;margin:16px 0 0 0;">My Recent Bets</div>
-  <div id="profBetsWrap" style="max-height:160px;overflow-y:auto;"></div>
-</div>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV8nNFUsRWZvwE5hSC0fQAEjtLKPtIDPo",
+      authDomain: "pdf-hosting-54a2f.firebaseapp.com",
+      databaseURL: "https://pdf-hosting-54a2f-default-rtdb.firebaseio.com",
+      projectId: "pdf-hosting-54a2f",
+      storageBucket: "pdf-hosting-54a2f.appspot.com",
+      messagingSenderId: "276398225231",
+      appId: "1:276398225231:web:65b9ac0f9db22ed56976b7"
+    };
+    firebase.initializeApp(firebaseConfig);
 
-<!-- Deposit Modal -->
-<div id="depositModal" class="modal" style="display:none;">
-  <button class="close-btn" onclick="closeDeposit()">×</button>
-  <h3>Deposit (Min ₹100)</h3>
-  <div style="text-align:center;">
-    <img src="https://i.ibb.co/Z6YG9hw2/IMG-20250720-WA0020-2.webp" alt="Admin UPI QR" style="width:117px;margin-bottom:7px;">
-    <div style="margin-bottom:6px;">Admin UPI: <span style="color:#1ea3e4;font-weight:700">7574060906@ybl<style="color:#1ea3e4;font-weight:700"></span></div></span></div>
-  </div>
-  <input type="number" min="100" id="depositAmt" class="input-x" placeholder="Amount (min ₹100)">
-  <input id="depositFullName" class="input-x" placeholder="Your Full Name*" required>
-  <input id="depositPhone" class="input-x" maxlength="10" minlength="10" pattern="\\d{10}" placeholder="Your 10-digit Phone*" required>
-  <input id="depositTxnId" class="input-x" placeholder="UPI Transaction ID">
-  <div class="captcha-box">
-    <span class="captcha-img" id="depositCaptchaBox"></span>
-    <button class="refresh-captcha" onclick="refreshDepositCaptcha()" type="button">↻</button>
-    <input id="depositCaptchaInput" placeholder="Enter code" style="width:63px;">
-  </div>
-  <div class="captcha-error" id="depositCaptchaError"></div>
-  <button class="action-btn" style="width:98%;margin-top:10px;" onclick="submitDeposit()">Submit</button>
-  <div id="depositMsg" style="color:#117d0c;margin-top:7px;"></div>
-</div>
+    // **UPDATED BETTING PAYOUTS WITH NEW AMOUNTS**
+    const BET_PAYOUTS = {
+      20: 10,
+      40: 20, 
+      60: 30,
+      100: 70,
+      150: 100,    // NEW: ₹150 to win ₹100
+      250: 150,    // NEW: ₹250 to win ₹150
+      500: 250,    // NEW: ₹500 to win ₹250
+      1000: 400    // NEW: ₹1000 to win ₹400
+    };
+    
+    const CATEGORY_LIST = ["All","IPL","ODI","T20","Test"];
+    let curUser = null, curSafeEmail = '', uStats={}, allQuestions={}, shownCategory='All', liveMatches={};
 
-<!-- Withdraw Modal -->
-<div id="withdrawModal" class="modal" style="display:none;">
-  <button class="close-btn" onclick="closeWithdraw()">×</button>
-  <h3>Withdraw (Min ₹300)</h3>
-  <input type="number" min="300" id="withdrawAmt" class="input-x" placeholder="Amount (min ₹300)">
-  <input id="withdrawUpi" class="input-x" placeholder="YOUR UPI ID">
-  <input id="withdrawPhone" class="input-x" placeholder="Your Phone Number">
-  <div class="captcha-box">
-    <span class="captcha-img" id="withdrawCaptchaBox"></span>
-    <button class="refresh-captcha" onclick="refreshWithdrawCaptcha()" type="button">↻</button>
-    <input id="withdrawCaptchaInput" placeholder="Enter code" style="width:63px;">
-  </div>
-  <div class="captcha-error" id="withdrawCaptchaError"></div>
-  <button class="action-btn wdr" style="width:98%;margin-top:10px;" onclick="submitWithdraw()">Request Withdraw</button>
-  <div id="withdrawMsg" style="color:#117d0c;margin-top:8px;"></div>
-</div>
-
-<script>
-/* FIREBASE CONFIG: REPLACE WITH YOUR KEYS */
-const firebaseConfig = {
-  apiKey: "AIzaSyDV8nNFUsRWZvwE5hSC0fQAEjtLKPtIDPo",
-  authDomain: "pdf-hosting-54a2f.firebaseapp.com",
-  databaseURL: "https://pdf-hosting-54a2f-default-rtdb.firebaseio.com",
-  projectId: "pdf-hosting-54a2f",
-  storageBucket: "pdf-hosting-54a2f.appspot.com",
-  messagingSenderId: "160770204982",
-  appId: "1:160770204982:web:93b29bb2e49482d1e4ff97"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.database();
-
-const BET_PAYOUTS = {20:10,40:20,60:30,100:70};
-const CATEGORY_LIST = ["All","IPL","ODI","T20","Test"];
-let curUser = null, curSafeEmail = '', uStats={}, allQuestions={}, shownCategory='All', liveMatches={};
-let userStatsListener = null;
-
-/* NEWS MARQUEE FROM ADMIN */
-db.ref('news').on('value', snap=>{
-  let t = snap.val()||"Welcome to Cricket Quiz Bet! Place your bets and win big!";
-  document.getElementById('newsBar').style.display = t.trim() ? "block" : "none";
-  document.getElementById('newsMarquee').textContent = t||"";
-});
-
-/* AUTHENTICATION FLOW */
-const authContainer = document.getElementById('authContainer');
-const appContainer = document.getElementById('app-container');
-
-function renderAuthPage(page) {
-    let html = '';
-    if (page === 'login') {
-        html = `<div class="auth-card">
-            <div class="auth-title">Login</div>
-            <input type="email" id="login_email" class="input-x" placeholder="Email" required>
-            <input type="password" id="login_password" class="input-x" placeholder="Password" required>
-            <button class="action-btn" onclick="doLogin()">Login</button>
-            <div class="error-msg" id="loginErr"></div>
-            <div class="auth-link"><a href="#" onclick="renderAuthPage('forgot')">Forgot Password?</a></div>
-            <div class="auth-link">No account? <a href="#" onclick="renderAuthPage('signup')">Sign Up</a></div>
-        </div>`;
-    } else if (page === 'signup') {
-        html = `<div class="auth-card">
-            <div class="auth-title">Create Account</div>
-            <form id="signupForm" onsubmit="doSignup(event)">
-                <input type="text" id="signup_name" class="input-x" placeholder="Full Name*" required>
-                <input type="email" id="signup_email" class="input-x" placeholder="Email*" required>
-                <input type="tel" id="signup_phone" class="input-x" maxlength="10" minlength="10" pattern="\\d{10}" placeholder="10-digit Mobile Number*" required>
-                <input type="password" id="signup_password" class="input-x" placeholder="Password*" required>
-                <input type="password" id="signup_confirm" class="input-x" placeholder="Confirm Password*" required>
-                <div class="captcha-box">
-                  <span class="captcha-img" id="signupCaptchaBox"></span>
-                  <button class="refresh-captcha" onclick="refreshSignupCaptcha()" type="button">↻</button>
-                  <input id="signupCaptchaInput" placeholder="Enter code" style="width:64px;" required maxlength="6">
-                </div>
-                <div class="captcha-error" id="signupCaptchaError"></div>
-                <button type="submit" class="action-btn">Sign Up</button>
-            </form>
-            <div class="error-msg" id="signupErr"></div>
-            <div class="auth-link">Already have an account? <a href="#" onclick="renderAuthPage('login')">Login</a></div>
-        </div>`;
-    } else if (page === 'forgot') {
-        html = `<div class="auth-card">
-            <div class="auth-title">Reset Password</div>
-            <input type="email" id="reset_email" class="input-x" placeholder="Enter your email">
-            <button class="action-btn" onclick="doResetPassword()">Send Reset Link</button>
-            <div class="error-msg" id="forgotErr"></div>
-            <div class="auth-link"><a href="#" onclick="renderAuthPage('login')">Back to Login</a></div>
-        </div>`;
-    }
-    authContainer.innerHTML = html;
-    if(page==="signup") refreshSignupCaptcha();
-}
-
-let signupCaptchaVal = '';
-function makeCaptcha(len=5){
-  let chars='ABCDEFGHJKLMNPRSTUVWXYZ23456789',txt='';
-  while(txt.length<len) txt+=chars[Math.floor(Math.random()*chars.length)];
-  return txt;
-}
-function refreshSignupCaptcha(){
-  signupCaptchaVal = makeCaptcha();
-  document.getElementById("signupCaptchaBox").innerText = signupCaptchaVal;
-  document.getElementById("signupCaptchaInput").value = '';
-  document.getElementById("signupCaptchaError").innerText = '';
-}
-
-function doLogin() {
-    const email = document.getElementById('login_email').value.trim();
-    const pass = document.getElementById('login_password').value;
-    const errEl = document.getElementById('loginErr');
-    errEl.innerText = '';
-    if (!email || !pass) { errEl.innerText = "Email and password are required."; return; }
-    auth.signInWithEmailAndPassword(email, pass).catch(e => {
-        errEl.innerText = e.message.replace("Firebase: ", "");
-    });
-}
-function doSignup(e) {
-    e.preventDefault();
-    const name = document.getElementById('signup_name').value.trim();
-    const email = document.getElementById('signup_email').value.trim();
-    const phone = document.getElementById('signup_phone').value.trim();
-    const pass = document.getElementById('signup_password').value;
-    const conf = document.getElementById('signup_confirm').value;
-    const captcha = document.getElementById('signupCaptchaInput').value.trim().toUpperCase();
-    const errEl = document.getElementById('signupErr'), errC = document.getElementById('signupCaptchaError');
-    errEl.innerText = '';errC.innerText='';
-    if (!name || !email || !phone || !pass || !conf || !captcha) { errEl.innerText = "All fields required."; return; }
-    if (!/^\d{10}$/.test(phone)) { errEl.innerText = "Enter valid 10-digit mobile no."; return; }
-    if (pass !== conf) { errEl.innerText = "Passwords do not match."; return; }
-    if (pass.length < 6) { errEl.innerText = "Password min 6 chars."; return; }
-    if (captcha !== signupCaptchaVal) { errC.innerText = "Captcha code invalid."; refreshSignupCaptcha(); return; }
-    auth.createUserWithEmailAndPassword(email, pass)
-        .then(userCredential => {
-            const safeEmail = userCredential.user.email.replace(/\./g, '_');
-            db.ref('users/' + safeEmail).set({
-                fullName: name,
-                phone: phone,
-                email: userCredential.user.email,
-                totalScore: 0,
-                winCount: 0,
-                lossCount: 0
-            });
-        })
-        .catch(e => {
-            errEl.innerText = e.message.replace("Firebase: ", "");
-        });
-}
-function doResetPassword() {
-    const email = document.getElementById('reset_email').value.trim();
-    const errEl = document.getElementById('forgotErr');
-    errEl.innerText = '';
-    if (!email) { errEl.innerText = "Please enter your email address."; return; }
-    auth.sendPasswordResetEmail(email)
-        .then(() => { errEl.innerText = "Password reset link sent to your email!"; })
-        .catch(e => { errEl.innerText = e.message.replace("Firebase: ", ""); });
-}
-function signOut() {
-    auth.signOut();
-}
-
-/* AUTH STATE CONTROLLER */
-auth.onAuthStateChanged(user => {
-    if (user) {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
         curUser = user;
-        curSafeEmail = user.email.replace(/\./g, '_');
-        appContainer.style.display = 'block';
-        authContainer.style.display = 'none';
-        setupListeners();
-    } else {
-        curUser = null;
-        curSafeEmail = '';
-        appContainer.style.display = 'none';
-        authContainer.style.display = 'block';
-        renderAuthPage('login');
-        teardownListeners();
-    }
-});
-
-function setupListeners() {
-    teardownListeners(); 
-    const userRef = db.ref('users/' + curSafeEmail);
-    userStatsListener = userRef.on('value', snap => {
-        uStats = snap.val() || { totalScore: 0, winCount: 0, lossCount: 0 };
-        document.getElementById('profName').innerText = uStats.fullName || '-';
-        document.getElementById('profPhone').innerText = uStats.phone || '-';
-        document.getElementById('profEmail').innerText = curUser.email;
-        document.getElementById('profBalance').innerText = (uStats.totalScore || 0) + ' ₹';
-        document.getElementById('profWins').innerText = uStats.winCount || 0;
-        document.getElementById('profLosses').innerText = uStats.lossCount || 0;
-    });
-    renderCategories();
-    loadLiveScores();
-    loadQuestions();
-}
-
-function teardownListeners() {
-    if (userStatsListener) {
-        db.ref('users/' + curSafeEmail).off('value', userStatsListener);
-        userStatsListener = null;
-    }
-}
-
-/* CATEGORY TABS */
-function renderCategories(){
-  let html="";
-  CATEGORY_LIST.forEach(cat=>{
-    html += `<button class="tab${shownCategory===cat?' active':''}" onclick="filterCategory('${cat}')">${cat}</button>`;
-  });
-  document.getElementById('categoryTabs').innerHTML = html;
-}
-function filterCategory(cat){shownCategory=cat; renderCategories(); renderQuestions(); renderLiveMatch();}
-
-/* LIVE SCORE */
-function loadLiveScores(){
-  db.ref('liveScores').on('value',snap=>{
-    liveMatches = snap.val()||{};
-    renderLiveMatch();
-  });
-}
-function renderLiveMatch(){
-  let cat = shownCategory==="All"?null:shownCategory;
-  let useMatch = null;
-  Object.values(liveMatches).forEach(m=>{
-    if(m.status==="Live" && (!cat||m.category===cat)) useMatch = m;
-  });
-  let html="";
-  if(useMatch){
-    html = `<div class="match-live-box">
-      <div>
-        <span style="font-size:1.06em;font-weight:600;">${useMatch.matchName||'-'}</span>
-        <span class="live-status-chip">LIVE</span>
-      </div>
-      <div style="font-size:1.32em;padding:6px 0 4px 0;">${useMatch.currentScore||'-'}</div>
-      <div style="font-size:.98em;color:#4f7fa8;">${useMatch.details||''}</div>
-    </div>`;
-  }
-  document.getElementById('matchLiveArea').innerHTML = html;
-}
-
-/* QUIZ QUESTIONS */
-function loadQuestions() {
-  db.ref('quizQuestions').on('value', snap => {
-    allQuestions = snap.val() || {};
-    renderQuestions();
-  });
-}
-
-function renderQuestions() {
-  if (!curUser) return;
-  
-  const quizContainer = document.getElementById('quizQuestions');
-  if (!quizContainer) return;
-  
-  quizContainer.innerHTML = '';
-  
-  const questionsArray = Object.entries(allQuestions);
-  
-  if (questionsArray.length === 0) {
-    quizContainer.innerHTML = `<div class="no-quiz">No quiz questions available. Please check back later!</div>`;
-    return;
-  }
-  
-  let filteredQuestions = questionsArray;
-  if (shownCategory !== 'All') {
-    filteredQuestions = questionsArray.filter(([qid, q]) => q.category === shownCategory);
-  }
-  
-  if (filteredQuestions.length === 0) {
-    quizContainer.innerHTML = `<div class="no-quiz">No quiz questions in "${shownCategory}" category.</div>`;
-    return;
-  }
-  
-  filteredQuestions.sort((a, b) => (b[1].startTime || 0) - (a[1].startTime || 0));
-  
-  filteredQuestions.forEach(([qid, question]) => {
-    renderQuizCard(qid, question, quizContainer);
-  });
-}
-
-function renderQuizCard(qid, q, container) {
-  db.ref('userBets/' + curSafeEmail + '/' + qid).once('value').then(betSnap => {
-    const bet = betSnap.val();
-    const locked = !!bet;
-    const answer = q.answer;
-    const showRes = !!answer;
-    
-    const questionText = q.question || 'Question text not available';
-    
-    let cardHTML = `
-      <div class="quiz-card${locked ? ' locked' : ''}">
-        <div class="quiz-meta">
-          <div class="cat-chip">${q.category || 'General'}</div>
-        </div>
-        <div class="quiz-question">${questionText}</div>
-        
-        <div class="bet-form" style="${locked ? 'pointer-events:none;opacity:0.8;' : ''}">
-          <div class="bet-opts">
-            <label>
-              <input name="ans_${qid}" type="radio" value="Yes" ${locked && bet?.betOption === 'Yes' ? 'checked' : ''}> Yes
-            </label>
-            <label>
-              <input name="ans_${qid}" type="radio" value="No" ${locked && bet?.betOption === 'No' ? 'checked' : ''}> No
-            </label>
-          </div>
-          <div style="margin-top:8px;">
-            <select id="amount_${qid}" ${locked ? 'disabled' : ''}>
-              <option value="20" ${locked && bet?.amount === 20 ? 'selected' : ''}>₹20 to win ₹10</option>
-              <option value="40" ${locked && bet?.amount === 40 ? 'selected' : ''}>₹40 to win ₹20</option>
-              <option value="60" ${locked && bet?.amount === 60 ? 'selected' : ''}>₹60 to win ₹30</option>
-              <option value="100" ${locked && bet?.amount === 100 ? 'selected' : ''}>₹100 to win ₹70</option>
-            </select>
-            <button onclick="placeBet('${qid}')" ${locked ? 'disabled' : ''}>Place Bet</button>
-          </div>
-        </div>`;
-    
-    if (locked) {
-      cardHTML += `<div class="bet-info">Your Bet: <b>${bet.betOption}</b> for <b>₹${bet.amount}</b></div>`;
-      
-      let resultHTML = '';
-      if (!showRes) {
-        resultHTML = `<span class="res-chip wait-bg">Result: Waiting...</span>`;
-      } else if (bet.betOption === answer) {
-        const totalWinAmount = bet.amount + BET_PAYOUTS[bet.amount];
-        resultHTML = `<span class="res-chip win-bg">WON ₹${totalWinAmount}</span>`;
+        curSafeEmail = user.email.replace(/[.#$[\]]/g, '_');
+        document.getElementById('authContainer').style.display = 'none';
+        document.getElementById('app-container').style.display = 'block';
+        loadUserStats();
+        loadQuestions();
+        loadNews();
       } else {
-        resultHTML = `<span class="res-chip lose-bg">LOST ₹${bet.amount}</span>`;
+        document.getElementById('authContainer').style.display = 'block';
+        document.getElementById('app-container').style.display = 'none';
+        renderAuthPage('login');
+      }
+    });
+
+    function renderAuthPage(page) {
+      let content = '';
+      if (page === 'login') {
+        content = `
+          <div class="auth-card">
+            <h2 class="auth-title">🏏 Login to Cricket Bet</h2>
+            <input type="email" id="loginEmail" class="auth-input" placeholder="Email">
+            <input type="password" id="loginPassword" class="auth-input" placeholder="Password">
+            <button class="auth-btn" onclick="doLogin()">Login</button>
+            <div class="auth-link"><a href="#" onclick="renderAuthPage('signup')">Create Account</a></div>
+            <div class="auth-link"><a href="#" onclick="renderAuthPage('forgot')">Forgot Password?</a></div>
+          </div>
+        `;
+      } else if (page === 'signup') {
+        content = `
+          <div class="auth-card">
+            <h2 class="auth-title">📝 Create Account</h2>
+            <input type="email" id="signupEmail" class="auth-input" placeholder="Email">
+            <input type="password" id="signupPassword" class="auth-input" placeholder="Password">
+            <input type="password" id="confirmPassword" class="auth-input" placeholder="Confirm Password">
+            <button class="auth-btn" onclick="doSignup()">Create Account</button>
+            <div class="auth-link"><a href="#" onclick="renderAuthPage('login')">Already have account?</a></div>
+          </div>
+        `;
+      } else if (page === 'forgot') {
+        content = `
+          <div class="auth-card">
+            <h2 class="auth-title">🔐 Reset Password</h2>
+            <input type="email" id="resetEmail" class="auth-input" placeholder="Enter your email">
+            <button class="auth-btn" onclick="doPasswordReset()">Send Reset Email</button>
+            <div class="auth-link"><a href="#" onclick="renderAuthPage('login')">Back to Login</a></div>
+          </div>
+        `;
+      }
+      document.getElementById('authContainer').innerHTML = content;
+    }
+
+    function doLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      if (!email || !password) return alert('Please fill all fields');
+      
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(error => alert('Login failed: ' + error.message));
+    }
+
+    function doSignup() {
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!email || !password) return alert('Please fill all fields');
+      if (password !== confirmPassword) return alert('Passwords do not match');
+      if (password.length < 6) return alert('Password must be at least 6 characters');
+      
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          const safeEmail = email.replace(/[.#$[\]]/g, '_');
+          firebase.database().ref('users/' + safeEmail).set({
+            email: email,
+            totalScore: 100,
+            joinedAt: Date.now()
+          });
+        })
+        .catch(error => alert('Signup failed: ' + error.message));
+    }
+
+    function doPasswordReset() {
+      const email = document.getElementById('resetEmail').value;
+      if (!email) return alert('Please enter your email');
+      
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          alert('Password reset email sent! Check your inbox.');
+          renderAuthPage('login');
+        })
+        .catch(error => alert('Error: ' + error.message));
+    }
+
+    function signOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        firebase.auth().signOut();
+      }
+    }
+
+    function loadUserStats() {
+      firebase.database().ref('users/' + curSafeEmail).on('value', snap => {
+        uStats = snap.val() || {totalScore: 100};
+        document.getElementById('walletAmount').textContent = '₹' + (uStats.totalScore || 0);
+        updateUserStats();
+      });
+    }
+
+    function updateUserStats() {
+      firebase.database().ref('userBets/' + curSafeEmail).once('value', snap => {
+        const bets = snap.val() || {};
+        const betArray = Object.values(bets);
+        document.getElementById('totalBets').textContent = betArray.length;
+        document.getElementById('totalWins').textContent = betArray.filter(bet => bet.finalPayout > 0).length;
+      });
+    }
+
+    function loadNews() {
+      firebase.database().ref('news').once('value', snap => {
+        let t = snap.val() || "Welcome to Cricket Quiz Bet! Place your bets and win big!";
+        document.getElementById('newsText').innerHTML = t;
+      });
+    }
+
+    function loadQuestions() {
+      firebase.database().ref('quizQuestions').on('value', snap => {
+        allQuestions = snap.val() || {};
+        displayQuestions();
+      });
+    }
+
+    function displayQuestions() {
+      const container = document.getElementById('questionsContainer');
+      const questions = Object.entries(allQuestions);
+      
+      let filteredQuestions = questions.filter(([id, q]) => {
+        if (shownCategory !== 'All' && q.category !== shownCategory) return false;
+        return q.status === 'open' && new Date(q.endTime) > new Date();
+      });
+      
+      if (filteredQuestions.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🏏</div>
+            <div>No active bets in ${shownCategory} category</div>
+          </div>
+        `;
+        return;
       }
       
-      cardHTML += `<div style="margin-top:8px;">${resultHTML}</div>`;
-      
-      // REMOVED AUTO PAYOUT - Let admin handle all payouts
-      // The user page should NOT process payouts automatically
+      Promise.all(filteredQuestions.map(([qid, question]) => renderQuestionCard(qid, question)))
+        .then(cards => {
+          container.innerHTML = cards.join('');
+        });
     }
-    
-    cardHTML += `</div>`;
-    container.innerHTML += cardHTML;
-  });
-}
 
-function placeBet(qid) {
-  if (!curUser) return;
-  
-  const chosen = document.querySelector(`input[name="ans_${qid}"]:checked`);
-  const amt = Number(document.getElementById(`amount_${qid}`).value);
-  
-  if (!chosen) {
-    alert("Please select Yes or No!");
-    return;
-  }
-  
-  if ((uStats.totalScore || 0) < amt) {
-    alert("Insufficient balance. Please deposit more.");
-    return;
-  }
-  
-  db.ref('userBets/' + curSafeEmail + '/' + qid).once('value').then(snap => {
-    if (snap.exists()) {
-      alert("You have already placed a bet on this question.");
-      return;
-    }
-    
-    console.log(`🎯 Placing bet: User has ₹${uStats.totalScore}, betting ₹${amt}`);
-    
-    // 1. DEDUCT BET AMOUNT FROM WALLET IMMEDIATELY
-    db.ref('users/' + curSafeEmail + '/totalScore').transaction(currentBalance => {
-      const newBalance = (currentBalance || 0) - amt;
-      console.log(`💰 Wallet: ₹${currentBalance} - ₹${amt} = ₹${newBalance}`);
-      return newBalance;
-    }).then(() => {
-      // 2. SAVE BET RECORD  
-      db.ref('userBets/' + curSafeEmail + '/' + qid).set({
-        betOption: chosen.value,
-        amount: amt,
-        betTime: Date.now(),
-        result: "pending", // Will be settled by admin
-        payout: BET_PAYOUTS[amt]
-      }).then(() => {
-        console.log(`✅ Bet placed successfully - ₹${amt} deducted from wallet`);
-        renderQuestions();
-      });
-    });
-  });
-}
-
-/* REMOVED AUTOMATIC PAYOUT PROCESSING */
-// All payouts are now handled ONLY by the admin page
-// This prevents the 2x amount issue completely
-
-/* PROFILE */
-function openProfile() {
-  db.ref('users/' + curSafeEmail).once('value').then(snap => {
-    let d = snap.val() || {};
-    document.getElementById('profName').innerText = d.fullName || '-';
-    document.getElementById('profPhone').innerText = d.phone || '-';
-    document.getElementById('profEmail').innerText = d.email || curUser.email;
-    document.getElementById('profBalance').innerText = (d.totalScore || 0) + ' ₹';
-    document.getElementById('profWins').innerText = d.winCount || 0;
-    document.getElementById('profLosses').innerText = d.lossCount || 0;
-    
-    db.ref('userBets/' + curSafeEmail).once('value').then(sn => {
-      let bets = sn.val() || {}, arr = [];
-      for (let qid in bets) arr.push({...bets[qid], qid});
-      arr.sort((a, b) => b.betTime - a.betTime);
-      arr = arr.slice(0, 12);
-      
-      let html = `<table style="width:98%;margin:11px 0;"><tr><th>Bet</th><th>₹</th><th>Result</th></tr>`;
-      if (arr.length === 0) html += `<tr><td colspan="3">No bets yet</td></tr>`;
-      
-      arr.forEach(bet => {
-        let resultText = '';
-        if (bet.result === 'settled') {
-          if (bet.finalPayout && bet.finalPayout > 0) {
-            resultText = `Won ₹${bet.finalPayout}`;
-          } else {
-            resultText = `Lost ₹${bet.amount}`;
+    function renderQuestionCard(qid, question) {
+      return new Promise(resolve => {
+        firebase.database().ref('userBets/' + curSafeEmail + '/' + qid).once('value', betSnap => {
+          const bet = betSnap.val();
+          const locked = !!bet;
+          const endTime = new Date(question.endTime);
+          const timeLeft = Math.max(0, endTime - new Date());
+          
+          let resultHTML = '';
+          if (question.status === 'closed' && bet) {
+            if (bet.finalPayout && bet.finalPayout > 0) {
+              resultHTML = `<span class="result-chip win-bg">WON ₹${bet.finalPayout}</span>`;
+            } else if (bet.result === 'settled') {
+              resultHTML = `<span class="result-chip lose-bg">LOST ₹${bet.amount}</span>`;
+            }
+          } else if (locked) {
+            resultHTML = `<span class="result-chip pending-bg">BET PLACED</span>`;
           }
-        } else {
-          resultText = 'Pending';
+          
+          let bettingHTML = '';
+          if (!locked && timeLeft > 0) {
+            bettingHTML = `
+              <div class="bet-section">
+                <div class="bet-choice-section">
+                  <div class="bet-choice-title">🎯 Choose Your Answer</div>
+                  <div class="bet-choices">
+                    <div class="bet-choice yes" onclick="selectChoice('${qid}', 'Yes')">
+                      <div style="font-size:1.2em;">✅</div>
+                      <div>YES</div>
+                    </div>
+                    <div class="bet-choice no" onclick="selectChoice('${qid}', 'No')">
+                      <div style="font-size:1.2em;">❌</div>
+                      <div>NO</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bet-amount-section">
+                  <div class="bet-amount-title">💰 Select Bet Amount</div>
+                  <div class="bet-amounts">
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 20)">
+                      <div class="amount">₹20</div>
+                      <div class="win">Win ₹10</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 40)">
+                      <div class="amount">₹40</div>
+                      <div class="win">Win ₹20</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 60)">
+                      <div class="amount">₹60</div>
+                      <div class="win">Win ₹30</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 100)">
+                      <div class="amount">₹100</div>
+                      <div class="win">Win ₹70</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 150)">
+                      <div class="amount">₹150</div>
+                      <div class="win">Win ₹100</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 250)">
+                      <div class="amount">₹250</div>
+                      <div class="win">Win ₹150</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 500)">
+                      <div class="amount">₹500</div>
+                      <div class="win">Win ₹250</div>
+                    </div>
+                    <div class="bet-amount" onclick="selectAmount('${qid}', 1000)">
+                      <div class="amount">₹1000</div>
+                      <div class="win">Win ₹400</div>
+                    </div>
+                  </div>
+                  <button class="place-bet-btn" id="placeBetBtn_${qid}" onclick="placeBet('${qid}')" disabled>
+                    🎯 Place Bet
+                  </button>
+                </div>
+              </div>
+            `;
+          } else if (locked) {
+            bettingHTML = `
+              <div class="bet-info">
+                Your Bet: <strong>${bet.betOption}</strong> for <strong>₹${bet.amount}</strong>
+              </div>
+            `;
+          }
+          
+          const card = `
+            <div class="question-card">
+              <div class="question-category">${question.category}</div>
+              <div class="question-title">${question.title}</div>
+              <div class="question-text">${question.description || question.title}</div>
+              <div class="question-timer">⏰ ${formatTimeLeft(timeLeft)}</div>
+              ${resultHTML}
+              ${bettingHTML}
+            </div>
+          `;
+          
+          resolve(card);
+        });
+      });
+    }
+
+    // Global variables to track selections
+    let selectedChoices = {};
+    let selectedAmounts = {};
+
+    function selectChoice(qid, choice) {
+      selectedChoices[qid] = choice;
+      
+      // Update UI
+      const card = document.querySelector(`[onclick="selectChoice('${qid}', 'Yes')"]`).closest('.question-card');
+      const choices = card.querySelectorAll('.bet-choice');
+      choices.forEach(c => c.classList.remove('selected'));
+      
+      const selectedChoice = card.querySelector(`[onclick="selectChoice('${qid}', '${choice}')"]`);
+      selectedChoice.classList.add('selected');
+      
+      updatePlaceBetButton(qid);
+    }
+
+    function selectAmount(qid, amount) {
+      selectedAmounts[qid] = amount;
+      
+      // Update UI
+      const card = document.querySelector(`[onclick="selectAmount('${qid}', ${amount})"]`).closest('.question-card');
+      const amounts = card.querySelectorAll('.bet-amount');
+      amounts.forEach(a => a.classList.remove('selected'));
+      
+      const selectedAmount = card.querySelector(`[onclick="selectAmount('${qid}', ${amount})"]`);
+      selectedAmount.classList.add('selected');
+      
+      updatePlaceBetButton(qid);
+    }
+
+    function updatePlaceBetButton(qid) {
+      const btn = document.getElementById(`placeBetBtn_${qid}`);
+      if (selectedChoices[qid] && selectedAmounts[qid]) {
+        btn.disabled = false;
+        btn.textContent = `🎯 Bet ₹${selectedAmounts[qid]} on ${selectedChoices[qid]}`;
+      } else {
+        btn.disabled = true;
+        btn.textContent = '🎯 Place Bet';
+      }
+    }
+
+    function placeBet(qid) {
+      const choice = selectedChoices[qid];
+      const amount = selectedAmounts[qid];
+      
+      if (!choice || !amount) {
+        alert('Please select both an answer and bet amount');
+        return;
+      }
+      
+      firebase.database().ref('userBets/' + curSafeEmail + '/' + qid).once('value', snap => {
+        if (snap.exists()) {
+          alert('You have already placed a bet on this question!');
+          return;
         }
         
-        html += `<tr>
-          <td>${bet.betOption}</td>
-          <td>${bet.amount}</td>
-          <td style="color:${bet.result==='settled'&&bet.finalPayout>0?'#178b41':bet.result==='settled'?'#e44120':'#b28c19'}">${resultText}</td>
-        </tr>`;
+        if (uStats.totalScore < amount) {
+          alert(`Insufficient balance! You need ₹${amount} but have ₹${uStats.totalScore}. Please deposit more money.`);
+          return;
+        }
+        
+        const betData = {
+          questionId: qid,
+          amount: amount,
+          betOption: choice,
+          timestamp: Date.now(),
+          result: 'pending'
+        };
+        
+        firebase.database().ref('userBets/' + curSafeEmail + '/' + qid).set(betData).then(() => {
+          uStats.totalScore -= amount;
+          firebase.database().ref('users/' + curSafeEmail + '/totalScore').set(uStats.totalScore);
+          alert(`🎯 Bet placed successfully! ₹${amount} deducted from your wallet.\nYour bet: ${choice} for ₹${amount}`);
+          
+          // Clear selections
+          delete selectedChoices[qid];
+          delete selectedAmounts[qid];
+          
+          displayQuestions();
+          loadUserHistory();
+        });
       });
-      html += "</table>";
-      document.getElementById('profBetsWrap').innerHTML = html;
-    });
+    }
+
+    function filterByCategory(category) {
+      shownCategory = category;
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      displayQuestions();
+    }
+
+    function formatTimeLeft(timeLeft) {
+      if (timeLeft <= 0) return 'Ended';
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      return `${hours}h ${minutes}m left`;
+    }
+
+    function loadUserHistory() {
+      firebase.database().ref('userBets/' + curSafeEmail).limitToLast(5).once('value', snap => {
+        const bets = snap.val() || {};
+        const container = document.getElementById('historyContainer');
+        
+        if (Object.keys(bets).length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">📋</div>
+              <div>No betting history yet</div>
+            </div>
+          `;
+          return;
+        }
+        
+        let html = '';
+        Object.entries(bets).reverse().forEach(([qid, bet]) => {
+          let resultText = 'Pending';
+          let resultClass = 'pending-bg';
+          
+          if (bet.finalPayout && bet.finalPayout > 0) {
+            resultText = `Won ₹${bet.finalPayout}`;
+            resultClass = 'win-bg';
+          } else if (bet.result === 'settled' && (!bet.finalPayout || bet.finalPayout === 0)) {
+            resultText = `Lost ₹${bet.amount}`;
+            resultClass = 'lose-bg';
+          }
+          
+          html += `
+            <div class="history-item">
+              <div class="history-header">
+                <div class="history-question">Bet: ${bet.betOption}</div>
+                <div class="history-amount" style="color:${bet.result==='settled'&&bet.finalPayout>0?'#178b41':bet.result==='settled'?'#e44120':'#b28c19'}">${resultText}</div>
+              </div>
+              <div class="history-details">
+                Amount: ₹${bet.amount} • ${new Date(bet.timestamp).toLocaleDateString()}
+              </div>
+            </div>
+          `;
+        });
+        
+        container.innerHTML = html;
+      });
+    }
+
+    // Modal Functions
+    function openProfile() {
+      document.getElementById('profileModal').style.display = 'flex';
+      document.getElementById('profileContent').innerHTML = `
+        <p><strong>Email:</strong> ${curUser.email}</p>
+        <p><strong>Wallet:</strong> ₹${uStats.totalScore || 0}</p>
+        <p><strong>Joined:</strong> ${new Date(uStats.joinedAt || Date.now()).toLocaleDateString()}</p>
+      `;
+    }
+
+    function closeProfile() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    // Deposit Functions
+    let depositCaptchaCode = '';
     
-    document.getElementById('modalBg').style.display = 'block';
-    document.getElementById('profileModal').style.display = 'block';
-  });
-}
+    function refreshDepositCaptcha() {
+      depositCaptchaCode = Math.random().toString(36).substr(2, 5).toUpperCase();
+      document.getElementById('depositCaptcha').textContent = depositCaptchaCode;
+    }
 
-function closeProfile() {
-  document.getElementById('modalBg').style.display = 'none';
-  document.getElementById('profileModal').style.display = 'none';
-}
+    function openDeposit() {
+      if (!curUser) {
+        alert('Please login first to deposit money');
+        return;
+      }
+      
+      document.getElementById('depositModal').style.display = 'flex';
+      refreshDepositCaptcha();
+    }
 
-/* DEPOSIT/WITHDRAW */
-let depositCaptchaVal = '';
-function refreshDepositCaptcha() {
-  depositCaptchaVal = makeCaptcha();
-  document.getElementById("depositCaptchaBox").innerText = depositCaptchaVal;
-  document.getElementById("depositCaptchaInput").value = '';
-  document.getElementById("depositCaptchaError").innerText = '';
-}
+    function closeDeposit() {
+      document.getElementById('depositModal').style.display = 'none';
+      document.querySelectorAll('#depositModal .input-field').forEach(input => input.value = '');
+    }
 
-function openDeposit() {
-  refreshDepositCaptcha();
-  document.getElementById('modalBg').style.display = 'block';
-  document.getElementById('depositModal').style.display = 'block';
-  document.getElementById('depositMsg').innerText = '';
-}
+    function submitDeposit() {
+      const amount = parseInt(document.getElementById('depositAmount').value);
+      const name = document.getElementById('depositName').value.trim();
+      const phone = document.getElementById('depositPhone').value.trim();
+      const txnId = document.getElementById('depositTxnId').value.trim();
+      const captcha = document.getElementById('depositCaptchaInput').value.trim();
+      
+      if (!amount || amount < 100) return alert('Minimum deposit amount is ₹100');
+      if (!name) return alert('Please enter your full name');
+      if (!phone || phone.length !== 10) return alert('Please enter valid 10-digit phone number');
+      if (captcha.toUpperCase() !== depositCaptchaCode) return alert('Invalid captcha');
+      
+      const depositData = {
+        email: curUser.email,
+        amount: amount,
+        name: name,
+        phone: phone,
+        txnId: txnId,
+        timestamp: Date.now(),
+        status: 'pending'
+      };
+      
+      firebase.database().ref('depositRequests').push(depositData).then(() => {
+        alert('✅ Deposit request submitted! Admin will verify and add money to your wallet within 24 hours.');
+        closeDeposit();
+      }).catch(error => {
+        alert('Error: ' + error.message);
+      });
+    }
 
-function closeDeposit() {
-  document.getElementById('modalBg').style.display = 'none';
-  document.getElementById('depositModal').style.display = 'none';
-}
+    // Withdraw Functions
+    let withdrawCaptchaCode = '';
+    
+    function refreshWithdrawCaptcha() {
+      withdrawCaptchaCode = Math.random().toString(36).substr(2, 5).toUpperCase();
+      document.getElementById('withdrawCaptcha').textContent = withdrawCaptchaCode;
+    }
 
-function submitDeposit() {
-  let amt = Number(document.getElementById('depositAmt').value);
-  let name = document.getElementById('depositFullName').value.trim();
-  let phone = document.getElementById('depositPhone').value.trim();
-  let txn = document.getElementById('depositTxnId').value.trim();
-  let captcha = document.getElementById('depositCaptchaInput').value.trim().toUpperCase();
-  
-  if (isNaN(amt) || amt < 100) { document.getElementById('depositMsg').innerText = "Min deposit ₹100"; return; }
-  if (!name) { document.getElementById('depositMsg').innerText = "Name required"; return; }
-  if (!/^\d{10}$/.test(phone)) { document.getElementById('depositMsg').innerText = "10-digit phone required"; return; }
-  if (!txn || txn.length < 4) { document.getElementById('depositMsg').innerText = "UPI txn id required"; return; }
-  if (!captcha || captcha !== depositCaptchaVal) {
-    document.getElementById("depositCaptchaError").innerText = "Invalid captcha";
-    refreshDepositCaptcha();
-    return;
-  }
-  
-  document.getElementById('depositCaptchaError').innerText = '';
-  let dep = {amt, name, phone, txn, time: Date.now(), status: "pending"};
-  
-  db.ref('depositRequests/' + curSafeEmail + "_" + Date.now()).set(dep).then(() => {
-    document.getElementById('depositMsg').innerText = "Request submitted! Admin will verify.";
-    document.getElementById('depositAmt').value = '';
-    document.getElementById('depositFullName').value = '';
-    document.getElementById('depositPhone').value = '';
-    document.getElementById('depositTxnId').value = '';
-  });
-}
+    function openWithdraw() {
+      document.getElementById('withdrawModal').style.display = 'flex';
+      refreshWithdrawCaptcha();
+    }
 
-let withdrawCaptchaVal = '';
-function refreshWithdrawCaptcha() {
-  withdrawCaptchaVal = makeCaptcha();
-  document.getElementById("withdrawCaptchaBox").innerText = withdrawCaptchaVal;
-  document.getElementById("withdrawCaptchaInput").value = '';
-  document.getElementById("withdrawCaptchaError").innerText = '';
-}
+    function closeWithdraw() {
+      document.getElementById('withdrawModal').style.display = 'none';
+      document.querySelectorAll('#withdrawModal .input-field').forEach(input => input.value = '');
+    }
 
-function openWithdraw() {
-  refreshWithdrawCaptcha();
-  document.getElementById('modalBg').style.display = 'block';
-  document.getElementById('withdrawModal').style.display = 'block';
-  document.getElementById('withdrawMsg').innerText = '';
-}
+    function submitWithdraw() {
+      const amount = parseInt(document.getElementById('withdrawAmount').value);
+      const account = document.getElementById('withdrawAccount').value.trim();
+      const ifsc = document.getElementById('withdrawIFSC').value.trim();
+      const captcha = document.getElementById('withdrawCaptchaInput').value.trim();
+      
+      if (!amount || amount < 100) return alert('Minimum withdrawal amount is ₹100');
+      if (amount > uStats.totalScore) return alert('Insufficient balance');
+      if (!account) return alert('Please enter bank account number');
+      if (!ifsc) return alert('Please enter IFSC code');
+      if (captcha.toUpperCase() !== withdrawCaptchaCode) return alert('Invalid captcha');
+      
+      const withdrawData = {
+        email: curUser.email,
+        amount: amount,
+        account: account,
+        ifsc: ifsc,
+        timestamp: Date.now(),
+        status: 'pending'
+      };
+      
+      firebase.database().ref('withdrawRequests').push(withdrawData).then(() => {
+        alert('✅ Withdrawal request submitted! Processing may take 24-48 hours.');
+        closeWithdraw();
+      }).catch(error => {
+        alert('Error: ' + error.message);
+      });
+    }
 
-function closeWithdraw() {
-  document.getElementById('modalBg').style.display = 'none';
-  document.getElementById('withdrawModal').style.display = 'none';
-}
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
 
-function submitWithdraw() {
-  let amt = Number(document.getElementById('withdrawAmt').value);
-  let upi = document.getElementById('withdrawUpi').value.trim();
-  let phone = document.getElementById('withdrawPhone').value.trim();
-  let captcha = document.getElementById('withdrawCaptchaInput').value.trim().toUpperCase();
-  
-  if (isNaN(amt) || amt < 300) { document.getElementById('withdrawMsg').innerText = "Minimum ₹300"; return; }
-  if ((uStats.totalScore || 0) < amt) { document.getElementById('withdrawMsg').innerText = "Insufficient balance"; return; }
-  if (!upi.match(/@/)) { document.getElementById('withdrawMsg').innerText = "Invalid UPI ID"; return; }
-  if (!/^\d{10}$/.test(phone)) { document.getElementById('withdrawMsg').innerText = "10-digit phone required"; return; }
-  if (!captcha || captcha !== withdrawCaptchaVal) {
-    document.getElementById("withdrawCaptchaError").innerText = "Invalid captcha";
-    refreshWithdrawCaptcha();
-    return;
-  }
-  
-  document.getElementById('withdrawCaptchaError').innerText = '';
-  let req = {amt, upi, phone, time: Date.now(), status: "pending"};
-  
-  db.ref('withdrawRequests/' + curSafeEmail + "_" + Date.now()).set(req).then(() => {
-    document.getElementById('withdrawMsg').innerText = "Request sent! Admin will process.";
-    document.getElementById('withdrawAmt').value = '';
-    document.getElementById('withdrawUpi').value = '';
-    document.getElementById('withdrawPhone').value = '';
-  });
-}
-
-window.addEventListener('load', function() {
-  renderAuthPage('login');
-});
-</script>
+    // Initialize
+    setTimeout(() => {
+      loadUserHistory();
+    }, 2000);
+  </script>
 </body>
 </html>
